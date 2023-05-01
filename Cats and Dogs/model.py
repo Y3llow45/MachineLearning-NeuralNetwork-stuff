@@ -4,13 +4,26 @@ import numpy as np
 from keras.preprocessing import image
 
 # Load cat and dog images
-train_datagen = keras.preprocessing.image.ImageDataGenerator(rescale=1./255)
+train_datagen = keras.preprocessing.image.ImageDataGenerator(
+    rescale=1./255,
+    validation_split=0.2
+)
 
 train_generator = train_datagen.flow_from_directory(
     'Cats and Dogs\PetImages',
     target_size=(224, 224),
     batch_size=32,
-    class_mode='binary')
+    class_mode='binary',
+    subset='training'
+)
+
+validation_generator = train_datagen.flow_from_directory(
+    'Cats and Dogs\PetImages',
+    target_size=(224, 224),
+    batch_size=32,
+    class_mode='binary',
+    subset='validation'
+)
 
 # model
 model = keras.models.Sequential([
@@ -31,7 +44,7 @@ model.compile(optimizer='adam', loss='binary_crossentropy',
               metrics=['accuracy'])
 
 # train
-model.fit(train_generator, epochs=10)
+model.fit(train_generator, epochs=10, validation_data=validation_generator)
 
 # evaluate
 test_datagen = keras.preprocessing.image.ImageDataGenerator(rescale=1./255)
@@ -45,6 +58,9 @@ test_generator = test_datagen.flow_from_directory(
 test_loss, test_acc = model.evaluate(test_generator)
 
 print('Test accuracy:', test_acc * 100, '%')
+
+# save model
+model.save('my_model.h5')
 
 # predict on your own image
 img_path = 'test.png'
