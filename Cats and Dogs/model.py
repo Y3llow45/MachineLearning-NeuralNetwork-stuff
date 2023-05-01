@@ -7,7 +7,7 @@ from keras.preprocessing import image
 train_datagen = keras.preprocessing.image.ImageDataGenerator(rescale=1./255)
 
 train_generator = train_datagen.flow_from_directory(
-    '/PetImages',
+    'Cats and Dogs\PetImages',
     target_size=(224, 224),
     batch_size=32,
     class_mode='binary')
@@ -37,7 +37,7 @@ model.fit(train_generator, epochs=10)
 test_datagen = keras.preprocessing.image.ImageDataGenerator(rescale=1./255)
 
 test_generator = test_datagen.flow_from_directory(
-    '/path/to/test/directory',
+    'Cats and Dogs\PetImagesTest',
     target_size=(224, 224),
     batch_size=32,
     class_mode='binary')
