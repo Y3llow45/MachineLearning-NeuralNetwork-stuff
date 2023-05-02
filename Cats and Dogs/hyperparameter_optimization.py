@@ -18,15 +18,6 @@ train_generator = train_datagen.flow_from_directory(
     subset='training'
 )
 
-validation_generator = train_datagen.flow_from_directory(
-    'Cats and Dogs\PetImages',
-    target_size=(224, 224),
-    batch_size=32,
-    class_mode='binary',
-    subset='validation'
-)
-
-
 def build_model(hp):
     model = keras.Sequential()
     model.add(keras.layers.Conv2D(
@@ -86,13 +77,13 @@ tuner = RandomSearch(
 
 tuner.search_space_summary()
 
-tuner.search(train_generator, validation_data=validation_generator, epochs=10)
+tuner.search(train_generator, epochs=10)
 
 best_hps = tuner.get_best_hyperparameters(num_trials=1)[0]
 
 model = build_model(best_hps)
 
-model.fit(train_generator, validation_data=validation_generator, epochs=10)
+model.fit(train_generator, epochs=10)
 
 test_datagen = keras.preprocessing.image.ImageDataGenerator(rescale=1./255)
 test_generator = test_datagen.flow_from_directory(
@@ -103,12 +94,12 @@ test_generator = test_datagen.flow_from_directory(
 
 tuner.search_space_summary()
 
-tuner.search(train_generator, validation_data=validation_generator, epochs=10)
+tuner.search(train_generator, epochs=10)
 
 best_hps = tuner.get_best_hyperparameters(num_trials=1)[0]
 model = build_model(best_hps)
 
-model.fit(train_generator, validation_data=validation_generator, epochs=10)
+model.fit(train_generator, epochs=10)
 
 test_loss, test_acc = model.evaluate(test_generator)
 print('Test accuracy:', test_acc * 100, '%')
