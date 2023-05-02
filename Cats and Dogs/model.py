@@ -59,22 +59,4 @@ test_loss, test_acc = model.evaluate(test_generator)
 
 print('Test accuracy:', test_acc * 100, '%')
 
-# save model
-model.save('my_model.h5')
-
-# predict on your own image
-img_path = 'test.png'
-img = image.load_img(img_path, target_size=(224, 224))
-img_tensor = image.img_to_array(img)
-img_tensor /= 255.
-
-# Add batch dimension
-img_tensor = np.expand_dims(img_tensor, axis=0)
-
-# Predict the class of the image
-prediction = model.predict(img_tensor)
-
-if prediction[0][0] > 0.5:
-    print("Dog")
-else:
-    print("Cat")
+model.save('my_model.h1')
