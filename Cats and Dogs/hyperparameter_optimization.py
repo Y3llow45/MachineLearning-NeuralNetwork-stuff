@@ -2,8 +2,8 @@ import tensorflow as tf
 from tensorflow import keras
 import numpy as np
 from keras.preprocessing import image
-from kerastuner.tuners import RandomSearch
-from kerastuner.engine.hyperparameters import HyperParameters
+from keras_tuner.tuners import RandomSearch
+from keras_tuner.engine.hyperparameters import HyperParameters
 
 train_datagen = keras.preprocessing.image.ImageDataGenerator(
     rescale=1./255,
@@ -36,11 +36,33 @@ def build_model(hp):
         input_shape=(224, 224, 3)
     ))
     model.add(keras.layers.MaxPooling2D(pool_size=(2, 2)))
+
+    model.add(keras.layers.Conv2D(
+        filters=hp.Int('conv2_filters', min_value=32, max_value=128, step=16),
+        kernel_size=hp.Choice('conv2_kernel', values=[3, 5]),
+        activation='relu',
+    ))
+    model.add(keras.layers.MaxPooling2D(pool_size=(2, 2)))
+
+    model.add(keras.layers.Conv2D(
+        filters=hp.Int('conv3_filters', min_value=32, max_value=128, step=16),
+        kernel_size=hp.Choice('conv3_kernel', values=[3, 5]),
+        activation='relu',
+    ))
+    model.add(keras.layers.MaxPooling2D(pool_size=(2, 2)))
+
     model.add(keras.layers.Flatten())
+
     model.add(keras.layers.Dense(
-        units=hp.Int('dense_units', min_value=32, max_value=512, step=32),
+        units=hp.Int('dense1_units', min_value=32, max_value=512, step=32),
         activation='relu'
     ))
+
+    model.add(keras.layers.Dense(
+        units=hp.Int('dense2_units', min_value=32, max_value=512, step=32),
+        activation='relu'
+    ))
+
     model.add(keras.layers.Dense(1, activation='sigmoid'))
 
     model.compile(
@@ -61,6 +83,16 @@ tuner = RandomSearch(
     directory='my_dir',
     project_name='my_project'
 )
+
+tuner.search_space_summary()
+
+tuner.search(train_generator, validation_data=validation_generator, epochs=10)
+
+best_hps = tuner.get_best_hyperparameters(num_trials=1)[0]
+
+model = build_model(best_hps)
+
+model.fit(train_generator, validation_data=validation_generator, epochs=10)
 
 test_datagen = keras.preprocessing.image.ImageDataGenerator(rescale=1./255)
 test_generator = test_datagen.flow_from_directory(
