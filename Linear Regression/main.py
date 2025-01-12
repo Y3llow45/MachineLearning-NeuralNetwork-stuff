@@ -1,9 +1,9 @@
 import numpy as np
-import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
+import matplotlib.pyplot as plt
 
-time_studied = np.array([20, 51, 33, 65, 22, 45, 11, 7, 21, 34, 25, 4, 57]).reshape(-1, 1)
-scores = np.array([55, 85, 46, 92, 49, 83, 46, 77, 54, 79, 53, 67, 56]).reshape(-1, 1)
+time_studied = np.array([4, 7, 11, 19, 21, 24, 28, 33, 37, 45, 51, 57, 65]).reshape(-1, 1)
+scores = np.array([25, 47, 34, 38, 54, 42, 56, 47, 76, 84, 87, 60, 92]).reshape(-1, 1)
 
 model = LinearRegression()
 model.fit(time_studied, scores)
