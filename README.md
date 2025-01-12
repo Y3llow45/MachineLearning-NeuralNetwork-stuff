@@ -5,5 +5,5 @@ Small and simple projects
 **Cats and Dogs** - Convolutional neural network (CNN) trained on a large dataset (24k images total). <br>
 The model uses convolutional layers for feature extraction and dense layers for binary classification.
 
-**Titanic Problem** - Machine Learning trained on a small dataset that includes each passangers age, gender, class and other. <br>
-A preprocessing pipeline handles missing values, encodes categorical features, and scales data. The tuned RandomForestClassifier has 81% accuracy on the test set.
+**Titanic Problem** - A machine learning model trained on a small dataset containing passenger details like age, gender, class, and more.<br>
+A preprocessing pipeline handles missing values, encodes categorical features, and scales the data. The tuned RandomForestClassifier achieves 81% accuracy on the test set.
