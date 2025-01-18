@@ -9,3 +9,5 @@ The model uses convolutional layers for feature extraction and dense layers for 
 A preprocessing pipeline handles missing values, encodes categorical features, and scales the data. The tuned RandomForestClassifier achieves 81% accuracy on the test set.
 
 **Linear Regression** - Model that uses linear regression to predict student's test score based on how many hours they studied.
+
+**K-Nearest Neighbors** - Classification algorithm which uses Euclidean distance formula to categorize data into classes.
