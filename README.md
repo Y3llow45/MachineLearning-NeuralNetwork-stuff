@@ -11,3 +11,5 @@ A preprocessing pipeline handles missing values, encodes categorical features, a
 **Linear Regression** - Model that uses linear regression to predict student's test score based on how many hours they studied.
 
 **K-Nearest Neighbors** - Classification algorithm which uses Euclidean distance formula to categorize data into classes.
+
+**K-Nearest Neighbors** - Support Vector classification algorithm.
