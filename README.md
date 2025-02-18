@@ -12,4 +12,4 @@ A preprocessing pipeline handles missing values, encodes categorical features, a
 
 **K-Nearest Neighbors** - Classification algorithm which uses Euclidean distance formula to categorize data into classes.
 
-**K-Nearest Neighbors** - Support Vector classification algorithm.
+**Support Vector Machines** - Support Vector classification algorithm.
