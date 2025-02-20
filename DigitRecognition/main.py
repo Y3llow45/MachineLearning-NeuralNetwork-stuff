@@ -30,7 +30,7 @@ model.save("./DigitRecognition/digit_recognition.keras")
 '''
 model = tf.keras.models.load_model("./DigitRecognition/digit_recognition.keras")
 
-for x in range(1, 7):
+for x in range(1, 8):
     img = cv.imread(f'./DigitRecognition/{x}.png', cv.IMREAD_GRAYSCALE)
     img = cv.bitwise_not(img)
     img = cv.resize(img, (28, 28))
