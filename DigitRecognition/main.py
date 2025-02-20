@@ -2,18 +2,20 @@ import cv2 as cv
 import numpy as np
 import tensorflow as tf
 import matplotlib.pyplot as plt
-'''
+
 mnist = tf.keras.datasets.mnist
 (x_train, y_train), (x_test, y_test) = mnist.load_data()
 
 x_train = tf.keras.utils.normalize(x_train, axis=1)
 x_test = tf.keras.utils.normalize(x_test, axis=1)
 
-model = tf.keras.models.Sequential()
-model.add(tf.keras.layers.Flatten(input_shape=(28, 28)))
-model.add(tf.keras.layers.Dense(128, activation=tf.nn.relu))
-model.add(tf.keras.layers.Dense(128, activation=tf.nn.relu))
-model.add(tf.keras.layers.Dense(10, activation=tf.nn.softmax))
+model = tf.keras.Sequential([
+    tf.keras.layers.Flatten(input_shape=(28, 28)),
+    tf.keras.layers.Dense(256, activation='relu'),  
+    tf.keras.layers.Dense(128, activation='relu'),
+    tf.keras.layers.Dense(64, activation='relu'),  
+    tf.keras.layers.Dense(10, activation='softmax')
+])
 
 model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 
@@ -26,11 +28,11 @@ print(f'Accuracy: {accuracy}, Loss: {loss}')
 for layer in model.layers:
     if isinstance(layer, tf.keras.layers.Dense) and layer.activation.__name__ == 'softmax_v2':
         layer.activation = tf.keras.activations.softmax
-model.save("./DigitRecognition/digit_recognition.keras")
-'''
-model = tf.keras.models.load_model("./DigitRecognition/digit_recognition.keras")
+model.save("./DigitRecognition/digit_recognition2.keras")
 
-for x in range(1, 8):
+model = tf.keras.models.load_model("./DigitRecognition/digit_recognition2.keras")
+
+for x in range(1, 11):
     img = cv.imread(f'./DigitRecognition/{x}.png', cv.IMREAD_GRAYSCALE)
     img = cv.bitwise_not(img)
     img = cv.resize(img, (28, 28))
