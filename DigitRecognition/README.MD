@@ -41,3 +41,20 @@ Layers: <br>
 accuracy: 99.01999831199646% <br>
 accuracy_rounded: 99.02% <br>
 custom_test_score: 8/10
+
+** Fifth model
+Convolutional Neural Networks trained with better data set and with better optimizer
+Layers: <br>
+  * Conv2D 32
+  * MaxPooling2D
+  * Conv2D 64
+  * MaxPooling2D
+  * Dense 128
+  * Dropout 0.5
+  * Dense 10
+accuracy: 99.01000261306763% <br>
+accuracy_rounded: 99.02% <br>
+custom_test_score: 8/10
+
+** Sixth model
+0.9839000105857849%
