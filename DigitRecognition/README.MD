@@ -16,3 +16,14 @@ Layers: <br>
 accuracy: 97.18999862670898 <br>
 accuracy_rounded: 97.19% <br>
 custom_test_score: 4/10
+
+** Third model
+Convolutional Neural Networks
+Layers: <br>
+  * Conv2D 
+  * dense layer 128
+  * dense layer 64
+  * dense layer 10
+accuracy: 98.76000285148621% <br>
+accuracy_rounded: 98.76% <br>
+custom_test_score: 8/10

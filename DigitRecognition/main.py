@@ -10,10 +10,13 @@ x_train = tf.keras.utils.normalize(x_train, axis=1)
 x_test = tf.keras.utils.normalize(x_test, axis=1)
 
 model = tf.keras.Sequential([
-    tf.keras.layers.Flatten(input_shape=(28, 28)),
-    tf.keras.layers.Dense(256, activation='relu'),  
+    tf.keras.layers.Conv2D(32, (3,3), activation='relu', input_shape=(28,28,1)),  
+    tf.keras.layers.MaxPooling2D(2,2),  
+    tf.keras.layers.Conv2D(64, (3,3), activation='relu'),  
+    tf.keras.layers.MaxPooling2D(2,2),
+    tf.keras.layers.Flatten(),
     tf.keras.layers.Dense(128, activation='relu'),
-    tf.keras.layers.Dense(64, activation='relu'),  
+    tf.keras.layers.Dropout(0.5),  # Prevents overfitting
     tf.keras.layers.Dense(10, activation='softmax')
 ])
 
@@ -28,9 +31,9 @@ print(f'Accuracy: {accuracy}, Loss: {loss}')
 for layer in model.layers:
     if isinstance(layer, tf.keras.layers.Dense) and layer.activation.__name__ == 'softmax_v2':
         layer.activation = tf.keras.activations.softmax
-model.save("./DigitRecognition/digit_recognition2.keras")
+model.save("./DigitRecognition/digit_recognition3.keras")
 
-model = tf.keras.models.load_model("./DigitRecognition/digit_recognition2.keras")
+model = tf.keras.models.load_model("./DigitRecognition/digit_recognition3.keras")
 
 for x in range(1, 11):
     img = cv.imread(f'./DigitRecognition/{x}.png', cv.IMREAD_GRAYSCALE)
