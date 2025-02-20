@@ -22,11 +22,15 @@ model.fit(x_train, y_train, epochs=3)
 accuracy, loss = model.evaluate(x_test, y_test)
 print(f'Accuracy: {accuracy}, Loss: {loss}')
 
+
+for layer in model.layers:
+    if isinstance(layer, tf.keras.layers.Dense) and layer.activation.__name__ == 'softmax_v2':
+        layer.activation = tf.keras.activations.softmax
 model.save("./DigitRecognition/digit_recognition.keras")
 '''
 model = tf.keras.models.load_model("./DigitRecognition/digit_recognition.keras")
 
-for x in range(1, 6):
+for x in range(1, 7):
     img = cv.imread(f'./DigitRecognition/{x}.png', cv.IMREAD_GRAYSCALE)
     img = cv.bitwise_not(img)
     img = cv.resize(img, (28, 28))
