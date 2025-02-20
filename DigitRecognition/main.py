@@ -22,13 +22,12 @@ model.fit(x_train, y_train, epochs=3)
 accuracy, loss = model.evaluate(x_test, y_test)
 print(f'Accuracy: {accuracy}, Loss: {loss}')
 
-model.save('digit_recognition.model')
-''' 
-
-model = tf.keras.models.load_model('digit_recognition.model')
+model.save("./DigitRecognition/digit_recognition.keras")
+'''
+model = tf.keras.models.load_model("./DigitRecognition/digit_recognition.keras")
 
 for x in range(1, 6):
-    img = cv.imread(f'{x}.png', cv.IMREAD_GRAYSCALE)
+    img = cv.imread(f'./DigitRecognition/{x}.png', cv.IMREAD_GRAYSCALE)
     img = cv.bitwise_not(img)
     img = cv.resize(img, (28, 28))
     img = tf.keras.utils.normalize(img, axis=1)
