@@ -2,6 +2,9 @@
 Small and simple projects
 
 ## Projects
+**Digit Recognition** - 6 different AI model trained to recognize hand written digits. Best model is Convolutional Neural Networks trained with enhanced data augmentation and scheduled optimzer.
+Accuracy: 98.69% and test score: 9/10
+
 **Cats and Dogs** - Convolutional neural network (CNN) trained on a large dataset (24k images total). <br>
 The model uses convolutional layers for feature extraction and dense layers for binary classification.
 
