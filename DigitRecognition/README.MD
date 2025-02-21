@@ -57,19 +57,19 @@ accuracy_rounded: 99.02% <br>
 custom_test_score: 8/10
 
 ** Sixth model
-Convolutional Neural Networks
+Convolutional Neural Networks trained with enhanced data augmentation and refined architecture
 Layers: <br>
+  * Conv2D 32
+  * BatchNormalization
+  * MaxPooling2D
   * Conv2D 64
   * BatchNormalization
   * MaxPooling2D
-  * Conv2D 128
-  * BatchNormalization
-  * MaxPooling2D 128
   * Flatten
-  * Dense 256
+  * Dense 128 (with L2 regularization)
   * Dropout 0.5
   * Dense 10
-accuracy: 98.39000105857849% <br>
-accuracy_rounded: 98.39% <br>
-custom_test_score: 8/10
+accuracy: 98.68999719619751% <br>
+accuracy_rounded: 98.69% <br>
+custom_test_score: 9/10
 
