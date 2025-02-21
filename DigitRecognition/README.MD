@@ -57,4 +57,19 @@ accuracy_rounded: 99.02% <br>
 custom_test_score: 8/10
 
 ** Sixth model
-0.9839000105857849%
+Convolutional Neural Networks
+Layers: <br>
+  * Conv2D 64
+  * BatchNormalization
+  * MaxPooling2D
+  * Conv2D 128
+  * BatchNormalization
+  * MaxPooling2D 128
+  * Flatten
+  * Dense 256
+  * Dropout 0.5
+  * Dense 10
+accuracy: 98.39000105857849% <br>
+accuracy_rounded: 98.39% <br>
+custom_test_score: 8/10
+

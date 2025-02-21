@@ -23,30 +23,53 @@ datagen = ImageDataGenerator(
 datagen.fit(x_train)
 
 model = tf.keras.Sequential([
-    tf.keras.layers.Conv2D(32, (3,3), activation='relu', input_shape=(28,28,1)),  
+    tf.keras.layers.Conv2D(64, (3,3), activation='relu', input_shape=(28,28,1)),  
+    tf.keras.layers.BatchNormalization(),
     tf.keras.layers.MaxPooling2D(2,2),  
-    tf.keras.layers.Conv2D(64, (3,3), activation='relu'),  
+    tf.keras.layers.Conv2D(128, (3,3), activation='relu'),  
+    tf.keras.layers.BatchNormalization(),
     tf.keras.layers.MaxPooling2D(2,2),
     tf.keras.layers.Flatten(),
-    tf.keras.layers.Dense(128, activation='relu'),
-    tf.keras.layers.Dropout(0.5),  # Prevents overfitting
+    tf.keras.layers.Dense(256, activation='relu', kernel_regularizer=tf.keras.regularizers.l2(0.001)),
+    tf.keras.layers.Dropout(0.5),
     tf.keras.layers.Dense(10, activation='softmax')
 ])
 
-model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
+lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
+    initial_learning_rate=0.001, decay_steps=10000, decay_rate=0.9
+)
+optimizer = tf.keras.optimizers.Adam(learning_rate=lr_schedule)
 
-model.fit(datagen.flow(x_train, y_train, batch_size=32), epochs=3, validation_data=(x_test, y_test))
+model.compile(optimizer=optimizer, loss='sparse_categorical_crossentropy', metrics=['accuracy'])
+
+early_stopping = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=3)
+model_checkpoint = tf.keras.callbacks.ModelCheckpoint(filepath='./DigitRecognition/best_model.keras', save_best_only=True)
+
+history = model.fit(datagen.flow(x_train, y_train, batch_size=64), 
+                    epochs=15, validation_data=(x_test, y_test), 
+                    callbacks=[early_stopping, model_checkpoint])
+
+# Plotting the training history
+plt.plot(history.history['accuracy'], label='train_accuracy')
+plt.plot(history.history['val_accuracy'], label='val_accuracy')
+plt.title('Model Accuracy')
+plt.ylabel('Accuracy')
+plt.xlabel('Epoch')
+plt.legend()
+plt.show()
+
+plt.plot(history.history['loss'], label='train_loss')
+plt.plot(history.history['val_loss'], label='val_loss')
+plt.title('Model Loss')
+plt.ylabel('Loss')
+plt.xlabel('Epoch')
+plt.legend()
+plt.show()
 
 accuracy, loss = model.evaluate(x_test, y_test)
 print(f'Accuracy: {accuracy}, Loss: {loss}')
 
-
-for layer in model.layers:
-    if isinstance(layer, tf.keras.layers.Dense) and layer.activation.__name__ == 'softmax_v2':
-        layer.activation = tf.keras.activations.softmax
-model.save("./DigitRecognition/digit_recognition4.keras")
-
-model = tf.keras.models.load_model("./DigitRecognition/digit_recognition4.keras")
+model = tf.keras.models.load_model("./DigitRecognition/best_model.keras")
 
 for x in range(1, 11):
     img = cv.imread(f'./DigitRecognition/{x}.png', cv.IMREAD_GRAYSCALE)
